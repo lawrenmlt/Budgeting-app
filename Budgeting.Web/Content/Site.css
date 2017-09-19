@@ -1,1 +1,136 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    /*background-color: #d7dfe6;*/
+}
+.caps-font {
+    font-variant-caps: all-petite-caps;
+}
+.page-title {
+    border-bottom: 1px solid #eeeeee;
+    color: #808080;
+    font-size: 16px;
+    padding: 5px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.form-control {
+    margin: 0px;
+}
+
+/* layout page */
+.sidebar > li > a {
+    color: #2b2b2b;
+    font-weight: bold;
+}
+.sidebar > li > a:hover {
+    color: #d5d5d5;
+    text-decoration: none;
+}
+.sidebar > li {
+    /*padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;*/
+    padding: 5px 20px 5px 20px;
+}
+.sidebar {
+    background-color: #428bca;
+    /*padding-bottom: 20px;*/
+    padding-top: 20px;
+    min-height: 600px;
+}
+.sidebar-col {
+    padding: 0px;
+}
+.form-control[disabled] {
+    background-color: white;
+    border: none;
+    box-shadow: none;
+}
+.container {
+    margin-left: 0%;
+    margin-right: 3%;
+    max-width: none;
+    
+}
+.body-content {
+    padding: 0px;
+}
+
+/* colors corresponding to CategorySpendingStatus */
+.Red {
+    background-color: #ea5252;
+}
+.Yellow {
+    background-color: #e9d250;
+}
+.Green {
+    background-color: #66c43e;
+}
+.Neutral {
+    background-color: #b3b2b2;
+}
+
+/* summary page - general */
+.btn-collapse-summary:hover, .btn-collapse-summary:focus{
+    background-color: #888888;
+}
+.btn-collapse-summary {
+    width: 100%;
+    text-align: left;
+    border-color: #888888;
+}
+.float-right {
+    float: right;
+}
+.text-highlight {
+    color: #3777ae;
+    font-weight: bold;
+    font-size: 16px;
+}
+.revenue {
+    color: #519b31;
+    font-weight: normal;
+}
+.expenditure {
+    color: #ea5252;
+    font-weight: normal;
+}
+.overview-label{
+    text-align: right;
+}
+
+/* activity page */
+.row {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* budget plans page */
+.budget-plan-label {
+    font-weight: normal;
+    text-align: left;
+}
+.budget-plan-label-editable {
+    color: #428bca;
+    font-weight: bold;
+    text-align: right;
+}
