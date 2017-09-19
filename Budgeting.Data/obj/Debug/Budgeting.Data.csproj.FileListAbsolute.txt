@@ -8,3 +8,13 @@ C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.
 C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Data\obj\Debug\Budgeting.Data.csprojResolveAssemblyReference.cache
 C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Data\obj\Debug\Budgeting.Data.dll
 C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Data\obj\Debug\Budgeting.Data.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\Budgeting.Data.dll.config
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\Budgeting.Data.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\Budgeting.Data.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\EntityFramework.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\EntityFramework.xml
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\obj\Debug\Budgeting.Data.csprojResolveAssemblyReference.cache
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\obj\Debug\Budgeting.Data.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Data\obj\Debug\Budgeting.Data.pdb

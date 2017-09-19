@@ -9,6 +9,7 @@ namespace Budgeting.Dto
 {
     public class BudgetPlanCategoryDto
     {
+        // comment test
         public int BudgetPlanCategoryId { get; set; }
         public int BudgetPlanId { get; set; }
         public int CategoryId { get; set; }

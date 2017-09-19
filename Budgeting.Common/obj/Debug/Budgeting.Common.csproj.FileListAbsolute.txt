@@ -3,3 +3,8 @@ C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Common\obj\Debug\Budgeting.Common.csprojResolveAssemblyReference.cache
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Common\obj\Debug\Budgeting.Common.dll
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Common\obj\Debug\Budgeting.Common.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Common\bin\Debug\Budgeting.Common.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Common\bin\Debug\Budgeting.Common.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Common\obj\Debug\Budgeting.Common.csprojResolveAssemblyReference.cache
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Common\obj\Debug\Budgeting.Common.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Common\obj\Debug\Budgeting.Common.pdb

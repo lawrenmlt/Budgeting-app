@@ -5,3 +5,10 @@ C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Dto\obj\Debug\Budgeting.Dto.pdb
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Dto\bin\Debug\Budgeting.Common.dll
 C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Dto\bin\Debug\Budgeting.Common.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\bin\Debug\Budgeting.Dto.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\bin\Debug\Budgeting.Dto.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\bin\Debug\Budgeting.Common.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\bin\Debug\Budgeting.Common.pdb
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\obj\Debug\Budgeting.Dto.csprojResolveAssemblyReference.cache
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\obj\Debug\Budgeting.Dto.dll
+C:\Users\mary.thomson\Source\Repos\Budgeting-app\Budgeting-app\Budgeting.Dto\obj\Debug\Budgeting.Dto.pdb
