@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BudgetingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Expenditure" Type="bit" Nullable="false" />
+    <Property Name="Recurring" Type="bit" />
+    <Property Name="DateOfActivity" Type="datetime" Nullable="false" />
+    <Property Name="RecurringDay" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Pretax" Type="bit" />
+  </EntityType>
+  <EntityType Name="BudgetPlan">
+    <Key>
+      <PropertyRef Name="BudgetPlanId" />
+    </Key>
+    <Property Name="BudgetPlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Selected" Type="bit" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="BudgetPlanCategory">
+    <Key>
+      <PropertyRef Name="BudgetPlanCategoryId" />
+    </Key>
+    <Property Name="BudgetPlanCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BudgetPlanId" Type="int" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="AllocatedAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="AllocatedPercentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UsePercent" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Standard" Type="bit" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BaseSalary" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ExpectedTaxPerc" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <Association Name="FK_Activity_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BudgetPlan_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="BudgetPlan">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BudgetPlanCategory_BudgetPlan">
+    <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="1" />
+    <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BudgetPlan">
+        <PropertyRef Name="BudgetPlanId" />
+      </Principal>
+      <Dependent Role="BudgetPlanCategory">
+        <PropertyRef Name="BudgetPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BudgetPlanCategory_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="BudgetPlanCategory">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Category_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Category" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BudgetingModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BudgetPlan" EntityType="Self.BudgetPlan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BudgetPlanCategory" EntityType="Self.BudgetPlanCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Activity_Category" Association="Self.FK_Activity_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BudgetPlan_User" Association="Self.FK_BudgetPlan_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="BudgetPlan" EntitySet="BudgetPlan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BudgetPlanCategory_BudgetPlan" Association="Self.FK_BudgetPlanCategory_BudgetPlan">
+      <End Role="BudgetPlan" EntitySet="BudgetPlan" />
+      <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BudgetPlanCategory_Category" Association="Self.FK_BudgetPlanCategory_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Category_User" Association="Self.FK_Category_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Category" EntitySet="Category" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

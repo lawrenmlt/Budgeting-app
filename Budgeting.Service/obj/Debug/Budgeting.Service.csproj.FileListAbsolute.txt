@@ -1,0 +1,16 @@
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Service.dll
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Service.pdb
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Dto.dll
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Dto.pdb
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\obj\Debug\Budgeting.Service.csprojResolveAssemblyReference.cache
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\obj\Debug\Budgeting.Service.dll
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\obj\Debug\Budgeting.Service.pdb
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Common.dll
+C:\Users\mary.thomson\documents\visual studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Common.pdb
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Data.dll
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\EntityFramework.dll
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Data.pdb
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\Budgeting.Data.dll.config
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\EntityFramework.xml
+C:\Users\mary.thomson\Documents\Visual Studio 2017\Projects\Budgeting\Budgeting.Service\bin\Debug\EntityFramework.SqlServer.xml

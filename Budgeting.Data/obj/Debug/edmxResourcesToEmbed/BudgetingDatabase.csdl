@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BudgetingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BudgetPlan">
+    <Key>
+      <PropertyRef Name="BudgetPlanId" />
+    </Key>
+    <Property Name="BudgetPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Selected" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="Self.FK_BudgetPlan_User" FromRole="BudgetPlan" ToRole="User" />
+    <NavigationProperty Name="BudgetPlanCategories" Relationship="Self.FK_BudgetPlanCategory_BudgetPlan" FromRole="BudgetPlan" ToRole="BudgetPlanCategory" />
+  </EntityType>
+  <EntityType Name="BudgetPlanCategory">
+    <Key>
+      <PropertyRef Name="BudgetPlanCategoryId" />
+    </Key>
+    <Property Name="BudgetPlanCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BudgetPlanId" Type="Int32" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="AllocatedAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AllocatedPercentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UsePercent" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BudgetPlan" Relationship="Self.FK_BudgetPlanCategory_BudgetPlan" FromRole="BudgetPlanCategory" ToRole="BudgetPlan" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_BudgetPlanCategory_Category" FromRole="BudgetPlanCategory" ToRole="Category" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Standard" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="BudgetPlanCategories" Relationship="Self.FK_BudgetPlanCategory_Category" FromRole="Category" ToRole="BudgetPlanCategory" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Category_User" FromRole="Category" ToRole="User" />
+    <NavigationProperty Name="Activities" Relationship="BudgetingModel.FK_Activity_Category" FromRole="Category" ToRole="Activity" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BaseSalary" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ExpectedTaxPerc" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="BudgetPlans" Relationship="Self.FK_BudgetPlan_User" FromRole="User" ToRole="BudgetPlan" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_Category_User" FromRole="User" ToRole="Category" />
+  </EntityType>
+  <Association Name="FK_BudgetPlan_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="BudgetPlan">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BudgetPlanCategory_BudgetPlan">
+    <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="1" />
+    <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BudgetPlan">
+        <PropertyRef Name="BudgetPlanId" />
+      </Principal>
+      <Dependent Role="BudgetPlanCategory">
+        <PropertyRef Name="BudgetPlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BudgetPlanCategory_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="BudgetPlanCategory">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Category_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Category" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Category">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BudgetingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BudgetPlans" EntityType="Self.BudgetPlan" />
+    <EntitySet Name="BudgetPlanCategories" EntityType="Self.BudgetPlanCategory" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_BudgetPlan_User" Association="Self.FK_BudgetPlan_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="BudgetPlan" EntitySet="BudgetPlans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BudgetPlanCategory_BudgetPlan" Association="Self.FK_BudgetPlanCategory_BudgetPlan">
+      <End Role="BudgetPlan" EntitySet="BudgetPlans" />
+      <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BudgetPlanCategory_Category" Association="Self.FK_BudgetPlanCategory_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Category_User" Association="Self.FK_Category_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Category" EntitySet="Categories" />
+    </AssociationSet>
+    <EntitySet Name="Activities" EntityType="BudgetingModel.Activity" />
+    <AssociationSet Name="FK_Activity_Category" Association="BudgetingModel.FK_Activity_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Expenditure" Type="Boolean" Nullable="false" />
+    <Property Name="Recurring" Type="Boolean" />
+    <Property Name="DateOfActivity" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RecurringDay" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="BudgetingModel.FK_Activity_Category" FromRole="Activity" ToRole="Category" />
+    <Property Name="Pretax" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK_Activity_Category">
+    <End Type="BudgetingModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="BudgetingModel.Activity" Role="Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

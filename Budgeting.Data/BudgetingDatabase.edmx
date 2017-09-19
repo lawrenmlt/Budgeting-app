@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BudgetingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Expenditure" Type="bit" Nullable="false" />
+          <Property Name="Recurring" Type="bit" />
+          <Property Name="DateOfActivity" Type="datetime" Nullable="false" />
+          <Property Name="RecurringDay" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Pretax" Type="bit" />
+        </EntityType>
+        <EntityType Name="BudgetPlan">
+          <Key>
+            <PropertyRef Name="BudgetPlanId" />
+          </Key>
+          <Property Name="BudgetPlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Selected" Type="bit" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="BudgetPlanCategory">
+          <Key>
+            <PropertyRef Name="BudgetPlanCategoryId" />
+          </Key>
+          <Property Name="BudgetPlanCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BudgetPlanId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="AllocatedAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AllocatedPercentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UsePercent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Standard" Type="bit" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaseSalary" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ExpectedTaxPerc" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Activity_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetPlan_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BudgetPlan">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetPlanCategory_BudgetPlan">
+          <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="1" />
+          <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BudgetPlan">
+              <PropertyRef Name="BudgetPlanId" />
+            </Principal>
+            <Dependent Role="BudgetPlanCategory">
+              <PropertyRef Name="BudgetPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetPlanCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="BudgetPlanCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BudgetingModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BudgetPlan" EntityType="Self.BudgetPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BudgetPlanCategory" EntityType="Self.BudgetPlanCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Activity_Category" Association="Self.FK_Activity_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Activity" EntitySet="Activity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetPlan_User" Association="Self.FK_BudgetPlan_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BudgetPlan" EntitySet="BudgetPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetPlanCategory_BudgetPlan" Association="Self.FK_BudgetPlanCategory_BudgetPlan">
+            <End Role="BudgetPlan" EntitySet="BudgetPlan" />
+            <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetPlanCategory_Category" Association="Self.FK_BudgetPlanCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_User" Association="Self.FK_Category_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BudgetingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BudgetPlan">
+          <Key>
+            <PropertyRef Name="BudgetPlanId" />
+          </Key>
+          <Property Name="BudgetPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Selected" Type="Boolean" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_BudgetPlan_User" FromRole="BudgetPlan" ToRole="User" />
+          <NavigationProperty Name="BudgetPlanCategories" Relationship="Self.FK_BudgetPlanCategory_BudgetPlan" FromRole="BudgetPlan" ToRole="BudgetPlanCategory" />
+        </EntityType>
+        <EntityType Name="BudgetPlanCategory">
+          <Key>
+            <PropertyRef Name="BudgetPlanCategoryId" />
+          </Key>
+          <Property Name="BudgetPlanCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BudgetPlanId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AllocatedAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AllocatedPercentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UsePercent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BudgetPlan" Relationship="Self.FK_BudgetPlanCategory_BudgetPlan" FromRole="BudgetPlanCategory" ToRole="BudgetPlan" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_BudgetPlanCategory_Category" FromRole="BudgetPlanCategory" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Standard" Type="Boolean" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="BudgetPlanCategories" Relationship="Self.FK_BudgetPlanCategory_Category" FromRole="Category" ToRole="BudgetPlanCategory" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Category_User" FromRole="Category" ToRole="User" />
+          <NavigationProperty Name="Activities" Relationship="BudgetingModel.FK_Activity_Category" FromRole="Category" ToRole="Activity" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseSalary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ExpectedTaxPerc" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="BudgetPlans" Relationship="Self.FK_BudgetPlan_User" FromRole="User" ToRole="BudgetPlan" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_User" FromRole="User" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_BudgetPlan_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BudgetPlan">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetPlanCategory_BudgetPlan">
+          <End Role="BudgetPlan" Type="Self.BudgetPlan" Multiplicity="1" />
+          <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BudgetPlan">
+              <PropertyRef Name="BudgetPlanId" />
+            </Principal>
+            <Dependent Role="BudgetPlanCategory">
+              <PropertyRef Name="BudgetPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetPlanCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="BudgetPlanCategory" Type="Self.BudgetPlanCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="BudgetPlanCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BudgetingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BudgetPlans" EntityType="Self.BudgetPlan" />
+          <EntitySet Name="BudgetPlanCategories" EntityType="Self.BudgetPlanCategory" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_BudgetPlan_User" Association="Self.FK_BudgetPlan_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BudgetPlan" EntitySet="BudgetPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetPlanCategory_BudgetPlan" Association="Self.FK_BudgetPlanCategory_BudgetPlan">
+            <End Role="BudgetPlan" EntitySet="BudgetPlans" />
+            <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetPlanCategory_Category" Association="Self.FK_BudgetPlanCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="BudgetPlanCategory" EntitySet="BudgetPlanCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_User" Association="Self.FK_Category_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <EntitySet Name="Activities" EntityType="BudgetingModel.Activity" />
+          <AssociationSet Name="FK_Activity_Category" Association="BudgetingModel.FK_Activity_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Activity" EntitySet="Activities" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Expenditure" Type="Boolean" Nullable="false" />
+          <Property Name="Recurring" Type="Boolean" />
+          <Property Name="DateOfActivity" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecurringDay" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="BudgetingModel.FK_Activity_Category" FromRole="Activity" ToRole="Category" />
+          <Property Name="Pretax" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Activity_Category">
+          <End Type="BudgetingModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="BudgetingModel.Activity" Role="Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Activity">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BudgetingModelStoreContainer" CdmEntityContainer="BudgetingEntities">
+          <EntitySetMapping Name="BudgetPlans">
+            <EntityTypeMapping TypeName="BudgetingModel.BudgetPlan">
+              <MappingFragment StoreEntitySet="BudgetPlan">
+                <ScalarProperty Name="BudgetPlanId" ColumnName="BudgetPlanId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BudgetPlanCategories">
+            <EntityTypeMapping TypeName="BudgetingModel.BudgetPlanCategory">
+              <MappingFragment StoreEntitySet="BudgetPlanCategory">
+                <ScalarProperty Name="BudgetPlanCategoryId" ColumnName="BudgetPlanCategoryId" />
+                <ScalarProperty Name="BudgetPlanId" ColumnName="BudgetPlanId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="AllocatedAmount" ColumnName="AllocatedAmount" />
+                <ScalarProperty Name="AllocatedPercentage" ColumnName="AllocatedPercentage" />
+                <ScalarProperty Name="UsePercent" ColumnName="UsePercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BudgetingModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BudgetingModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BudgetingModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BaseSalary" ColumnName="BaseSalary" />
+                <ScalarProperty Name="ExpectedTaxPerc" ColumnName="ExpectedTaxPerc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="BudgetingModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="Pretax" ColumnName="Pretax" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RecurringDay" ColumnName="RecurringDay" />
+                <ScalarProperty Name="DateOfActivity" ColumnName="DateOfActivity" />
+                <ScalarProperty Name="Recurring" ColumnName="Recurring" />
+                <ScalarProperty Name="Expenditure" ColumnName="Expenditure" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
