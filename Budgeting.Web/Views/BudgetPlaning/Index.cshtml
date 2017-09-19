@@ -1,0 +1,25 @@
+﻿@model int
+<p class="page-title">Manage Budget Plans</p>
+<div id="BudgetPlaningIndexDiv">
+    <div id="BudgetPlanSelectionDiv">
+            @{Html.RenderAction("BudgetPlanSelection"); }
+    </div>
+    <div id="BudgetPlanCategoryListingDiv">
+        @if (Model != 0)
+        {
+            {Html.RenderAction("BudgetPlanCategoryListing", new { budgetPlanId = Model }); }
+        }
+    </div>
+    @*<div id="AddUpdateCategoryDiv" class="hidden">
+        @{Html.RenderAction("AddUpdateCategory"); }
+    </div>*@
+</div>
+<script type="text/javascript">
+    $().ready({
+        if (@Model != 0)
+        {
+            $('#budgetPlanId').prop('selected', @Model);
+        }
+    });
+
+</script>

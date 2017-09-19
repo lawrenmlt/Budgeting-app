@@ -1,0 +1,34 @@
+﻿@using Budgeting.Dto
+@model List<BudgetPlanCategoryDto>
+
+
+<div id="SummaryIndexDiv">
+    <p class="page-title">Activity Summary</p>
+    @{ Html.RenderAction("OverallSummary"); }
+    @if (!Model.Any())
+    {
+        <p>No activities have been logged for this month.</p>
+    }
+    
+    @foreach (BudgetPlanCategoryDto dto in Model)
+    {
+        <div id="BudgetPlanCategoryDiv_@dto.BudgetPlanCategoryId">
+            @{ Html.RenderPartial("_CategorySummary", dto); }
+        </div>
+                }
+</div>
+
+<script type="text/javascript">
+    function Delete(ActivityId, BudgetPlanCategoryId) {
+        ReplaceSummaryList('@Url.Action("Delete")?activityId=' + ActivityId + '&budgetPlanCategoryId=' + BudgetPlanCategoryId, BudgetPlanCategoryId);
+    }
+    function UpdateCategory(id, budgetPlanId) {
+        ReplaceDiv('@Url.Action("GetCategoryOptions")?budgetPlanId=' + budgetPlanId, 'category_' + id);
+        $('#saveActivity_' + id).removeClass('hidden');
+        $('#updateCategory_' + id).addClass('hidden');
+    }
+    function Save(id) {
+        var newCat = $('#CategoryId').val();
+        ReplaceDiv('@Url.Action("UpdateCategory")?activityId=' + id + '&categoryId=' + newCat, 'SummaryIndexDiv');
+    }
+</script>

@@ -1,0 +1,166 @@
+﻿@using Budgeting.Dto
+@model ActivityDto
+
+<div id="NewActivityDiv">
+    <p class="page-title">Add a new expenditure / revenue</p>
+    @*@using (Ajax.BeginForm("SaveActivity", "Activity", null, new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "NewActivityDiv"
+    }))*@
+    @using (Html.BeginForm("SaveActivity", "Activity"))
+    {
+        <div id="ActivityIndexDiv">
+            <div class="row">
+                @* category drop down *@
+                <div class="form-horizontal col-sm-6">
+                    <div class="control-label col-sm-4">
+                        @*@Html.DisplayNameFor(x => x.CategoryId)*@
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.DropDownListEx("CategoryId", Model.CategoryOptions, -1, new { @class = "form-control" }, false)
+                    </div>
+                </div>
+                @* dateOfActivity *@
+                <div class="form-horizontal col-sm-6">
+                    <div class="control-label col-sm-4">
+                        @Html.DisplayNameFor(x => x.DateOfActivity)
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(x => Model.DateOfActivity, "{0:MM/dd/yy}", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @* amount *@
+                <div class="form-horizontal col-sm-6">
+                    <div class="control-label col-sm-4">
+                        @*@Html.DisplayNameFor(x => x.Amount)*@
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", placeholder = "Amount" })
+                    </div>
+                </div>
+                @* Expenditure *@
+                <div class="col-sm-6">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-8">
+                        <label class="btn">
+                            <input type="radio" name="Expenditure" value="true" checked="checked" /> Expenditure
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="Expenditure" value="false" /> Revenue
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @* description *@
+                <div class="form-horizontal col-sm-6">
+                    <div class="control-label col-sm-4">
+                        @*@Html.DisplayNameFor(x => x.Description)*@
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Description" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-8">
+                        <div>
+                            @Html.CheckBoxFor(x => x.Pretax) Pre-tax
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRecurringInfo" aria-expanded="false" aria-controls="collapseExample">
+                Make Recurring
+            </button>*@
+
+            @*<div class="collapse" id="collapseRecurringInfo">*@
+            <div>
+                @* recurring *@
+                <div class="row form-horizontal">
+                    <div class="col-sm-5 control-label">
+                        @*<input type="checkbox" name="Recurring" id="Recurring" /> Recurring every month*@
+                        @Html.CheckBoxFor(x => x.Recurring) Recurring every month
+                    </div>
+                    <div class="col-sm-7"></div>
+                </div>
+                @* RecurringDay *@
+                <div class="row form-horizontal">
+
+                    <div class="control-label col-sm-5">
+                        Day of the month to record
+                    </div>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="RecurringDay" name="RecurringDay">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <input type="submit" value="Enter" class="btn" />
+
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Add, Edit, or Delete your Category Options", "Index", "Categories")
+    </div>
+</div>
+<script type="text/javascript">
+    function ToggleRecurringTextBox() {
+        var IsChecked = $('#Recurring').is(':checked');
+        if (IsChecked) {
+            $('#Recurring').prop('checked', 'false');
+        } else {
+            $('#Recurring').prop('checked', 'true');
+        }
+    }
+
+</script>
+
+@*<script type="text/javascript">
+    $().ready(function () {
+        $('#DateOfActivity').datepicker({
+            //dateFormat: "dd/MM/yy",
+            //changeMonth: true,
+            //changeYear: true,
+            //yearRange: "-60:+0"
+        });
+    });
+</script>*@

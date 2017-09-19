@@ -1,0 +1,80 @@
+﻿@using Budgeting.Dto
+@model List<CategoryDto>
+
+@*@foreach (CategoryDto dto in Model)
+{
+    using (Ajax.BeginForm("SaveCategory", "Categories", null, new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "CategoryListDiv",
+        OnSuccess = "ShowEditHideSaveButtons",
+        OnFailure = "GenericFailure"
+    }))
+    {
+        <div class="row form-horizontal">
+            <div class="col-sm-2"></div>
+            @Html.HiddenFor(x => dto.CategoryId)
+            <div class="col-sm-4">
+                @Html.TextBoxFor(x => dto.Name, "", new { @class = "form-control cat-disabled-" + @dto.CategoryId, disabled = "true" })
+            </div>
+            <div class="col-sm-3">
+                <input type="submit" class="hidden btn" value="Save" id="CategoryListSaveBtn_@dto.CategoryId" />
+                <button class="btn" id="CategoryListEditBtn_@dto.CategoryId" onclick="EditCategory(@dto.CategoryId); return false;">Edit</button>
+            </div>
+            <div class="col-sm-3"><button class="btn btn-danger" onclick="ReplaceCategoryList('@Url.Action("DeleteCategory")?categoryId=@dto.CategoryId')">Delete</button></div>
+        </div>
+    }
+}*@
+
+<table class="table">
+    <tbody>
+        @if (Model.Count == 0)
+        {
+            { Html.RenderPartial("_NoItemsFound"); }
+        }
+        @foreach (CategoryDto dto in Model)
+        {
+            //using (Ajax.BeginForm("SaveCategory", "Categories", null, new AjaxOptions()
+            //{
+            //    InsertionMode = InsertionMode.Replace,
+            //    UpdateTargetId = "CategoryListDiv",
+            //    OnSuccess = "ShowEditHideSaveButtons",
+            //    OnFailure = "GenericFailure"
+            //}))
+            //{
+                <tr>
+                    <td></td>
+                    @Html.HiddenFor(x => dto.CategoryId)
+                    <td>
+                        @Html.TextBoxFor(x => dto.Name,"", new { @class = "form-control cat-disabled-" + @dto.CategoryId, id = "Name" + @dto.CategoryId, disabled="true" })
+                    </td>
+                    <td>
+                        <button class="hidden btn" onclick="SaveCategory(@dto.CategoryId)" id="CategoryListSaveBtn_@dto.CategoryId">Save</button>
+                        <button class="btn" id="CategoryListEditBtn_@dto.CategoryId" onclick="EditCategory(@dto.CategoryId); return false;">Edit</button>
+                    </td>
+                    <td><button class="btn btn-danger" onclick="ReplaceCategoryList('@Url.Action("DeleteCategory")?categoryId=@dto.CategoryId')">Delete</button></td>
+                </tr>
+            @*}*@
+        }
+        <tr>            
+            @using (Ajax.BeginForm("SaveCategory", "Categories", null, new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "CategoryListDiv",
+                OnSuccess = "$(#AddCategoryNameTextBox).val(''); "
+            }))
+            {
+                <td><i class="fa fa-plus-circle" aria-hidden="true"></td>
+                <td>@Html.TextBox("Name","", new { @class = "form-control", id= "AddCategoryNameTextBox" })</td>
+                <td><input type="submit" class="btn" value="Add" /></td>
+            }
+        </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+    function SaveCategory(CategoryId) {
+        var name = $('#Name' + CategoryId).val();
+        var Url = '@Url.Action("SaveCategory")?CategoryId=' + CategoryId + '&Name=' + name;
+        ReplaceCategoryList(Url);
+    }
+</script>

@@ -1,0 +1,95 @@
+﻿@using Budgeting.Dto
+@model BudgetPlanCategoryDto
+
+<p>
+    <button class="btn btn-primary @Model.SpendingStatus btn-collapse-summary" type="button" data-toggle="collapse" 
+            data-target="#collapseActivities_@Model.BudgetPlanCategoryId" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-caret-down" aria-hidden="true"></i>
+        @Html.DisplayFor(x => Model.CategoryName)
+        <span class="float-right">
+            $ @Model.RemainingAmount (@Model.RemainingPercentage %) Remaining
+        </span>
+    </button>
+</p>
+<div class="collapse" id="collapseActivities_@Model.BudgetPlanCategoryId">
+    <div class="">
+        <p>You've spent <span class="text-highlight">$ @Model.SpentAmount</span> of <span class="text-highlight">$ @Model.AllocatedAmount</span> budget.</p>
+        <p>This month's activity: </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>
+                        @if (Model.BudgetPlanCategoryId == 0)
+                        {
+                            <div>
+                                Category
+                            </div>
+                        }
+                    </th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ActivityDto act in Model.Activities)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => act.DateOfActivity)</td>
+                        <td>@Html.DisplayFor(x => act.Description)</td>
+                        <td>
+
+                            <div id="category_@act.ActivityId">
+                                @if (Model.BudgetPlanCategoryId == 0)
+                                {
+                                    <div>
+                                        @Html.DisplayFor(x => act.CategoryName)
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            @if (!act.Expenditure)
+                            {
+                                <label class="revenue">+  $ @act.Amount</label>
+                            }
+                            else
+                            {
+                                <label class="expenditure">-  $ @act.Amount</label>
+                            }
+                            @*@Html.DisplayFor(x => act.Amount)*@
+                        </td>
+                        <td>
+                            <button id="updateCategory_@act.ActivityId" class="btn" onclick="UpdateCategory(@act.ActivityId, @Model.BudgetPlanId)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                            <button id="saveActivity_@act.ActivityId" class="btn hidden" onclick="Save(@act.ActivityId)">Save</button>
+                            <button class="btn alert-danger" onclick="Delete(@act.ActivityId, @Model.BudgetPlanCategoryId)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Activities.Any())
+                {
+                    <tr>
+                        No expenditures or revenues here yet this month!
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $().ready(function() {
+        $(".fa-caret-down").on("click", function () {
+            $(this).toggleClass("fa-caret-down");
+            $(this).toggleClass("fa-caret-up");
+        });
+        $(".fa-caret-up").on("click", function () {
+            $(this).toggleClass("fa-caret-up");
+            $(this).toggleClass("fa-caret-down");
+        });
+    });
+</script>

@@ -1,0 +1,57 @@
+﻿@using Budgeting.Dto
+@using Budgeting.Web
+@model List<LookupDto>
+
+<div class="form-horizontal">
+    @using (Ajax.BeginForm("BudgetPlanCategoryListing", "BudgetPlaning", null, new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "BudgetPlanCategoryListingDiv",
+        //HttpMethod = "POST",
+        OnSuccess = "ShowAddUpdateCategoryDiv",
+        OnFailure = "GenericFailure"
+    }))
+    {
+        <div class="form-group">
+            <div class="control-label col-sm-2">Select Plan</div>
+            <div class="col-sm-4">
+                <div>@Html.DropDownListEx("budgetPlanId", Model, -1, new { @class = "form-control" }, true)</div>
+            </div>
+            <div class="col-sm-3">
+                @*<button class="btn" onclick="ReplaceCategoryListing(@Url.Action("CategoryListing")?budgetPlanId=)">Select</button>*@
+                <div><input class="btn" type="submit" id="SelectBtn" value="Select" /></div>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddNewForm" aria-expanded="false" aria-controls="collapseExample">
+                    New Budget Plan
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="collapse" id="collapseAddNewForm">
+    @using (Ajax.BeginForm("Create", "BudgetPlaning", null, new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "BudgetPlanCategoryListingDiv",
+        //HttpMethod = "POST",
+        OnSuccess = "ShowAddUpdateCategoryDiv",
+        OnFailure = "GenericFailure"
+    }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    Plan Name:
+                </div>
+                <div class="col-sm-4">
+                        @Html.TextBox("Name",null, new { @class = "form-control"})
+                </div>
+                <div class="col-sm-6">
+                    <input class="btn" value="Create" type="submit" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

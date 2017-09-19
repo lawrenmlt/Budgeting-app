@@ -1,0 +1,63 @@
+﻿@using Budgeting.Dto
+@model CategoryDto
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddNewCategory" aria-expanded="false" aria-controls="collapseExample">
+    Add Another Category
+</button>
+@using (Ajax.BeginForm("AddUpdateCategory", "BudgetPlaning", null, new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "CategoryDropDownDiv",
+    //HttpMethod = "POST",
+    OnFailure = "GenericFailure"
+}))
+{
+    <div class="collapse" id="collapseAddNewCategory">
+        @* Name *@
+        <div class="form-horizontal">
+            <label class="control-label col-sm-3">Category Name</label>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control"})
+                @*<input type="radio" id="CategoryIdRadio" onselect="DisableCategoryNameTextBox()"/> Select existing: @Html.DropDownListEx("CategoryId", Model.CategoryOptions, -1, new { @class = "form-control", id="CategoryDropDown"})
+                <input type="radio" id="CategoryNameRadio" onselect="DisableCategoryDropDown()"/> Create New: @Html.TextBoxFor(x => x.Name, new { @class = "form-control", id= "CategoryNameTextBox" })*@
+            </div>
+        </div>
+        @* radios *@
+        <div class="form-horizontal">
+            <label class="control-label col-sm-3">How much of your budget do you want to allocate?</label>
+            <div class="col-sm-9">
+                <div>
+                    <label class="col-sm-3">
+                        <input type="radio" id="UsePercentTrueRadio" onclick="DisableDollarAmountTextBox()" name="UsePercent" value="true" />  Percentage 
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(x => x.CategoryBudgetPercent, new { @class = "form-control", id = "PercentageTextBox" })
+                    </div>
+                </div>
+                <div>
+                    <label class="col-sm-3">
+                        <input type="radio" id="UsePercentFalseRadio" onclick="DisablePercentageTextBox()" name="UsePercent" value="false" />  Dollar Amount: 
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(x => x.CategoryBudgetDollar, new { @class = "form-control", id = "DollarAmountTextBox" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Create" />
+    </div>
+
+}
+
+<script type="text/javascript">
+    function DisablePercentageTextBox() {
+        $('#PercentageTextBox').val('');
+        $('#PercentageTextBox').prop("disabled", true);
+        $('#DollarAmountTextBox').prop("disabled", false);
+    }
+    function DisableDollarAmountTextBox() {
+        $('#DollarAmountTextBox').val('');
+        $('#DollarAmountTextBox').prop("disabled", true);
+        $('#PercentageTextBox').prop("disabled", false);
+    }
+</script>

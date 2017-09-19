@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>*@
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <i class="fa fa-home" aria-hidden="true"></i> Budgeting
+                </a>
+            </div>
+            @*<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Budgeting", "Index", "Home")</li>
+                </ul>
+            </div>*@
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="col-sm-3 sidebar-col">
+            <ul class="list-unstyled sidebar">
+                <li>@*<i class="fa fa-th-list" aria-hidden="true"></i>*@   @Html.ActionLink("Summary", "Index", "Home")</li>
+                <li>@*<i class="fa fa-plus-square-o" aria-hidden="true"></i>*@   @Html.ActionLink("New Expense or Revenue", "Index", "Activity")</li>
+                <li>@*<i class="fa fa-cog" aria-hidden="true"></i>*@   @Html.ActionLink("Your Budget Plans", "Index", "BudgetPlaning")</li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            @RenderBody()
+        </div>
+        <hr />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    $().ready(function () {
+        $('#DateOfActivity').datepicker({
+            //dateFormat: "dd/MM/yy",
+            //changeMonth: true,
+            //changeYear: true,
+            //yearRange: "-60:+0"
+        });
+    });
+</script>

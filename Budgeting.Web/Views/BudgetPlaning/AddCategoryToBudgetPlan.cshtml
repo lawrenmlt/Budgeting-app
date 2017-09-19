@@ -1,0 +1,63 @@
+﻿@using Budgeting.Dto
+@model BudgetPlanCategoryDto
+
+@using (Ajax.BeginForm("AddCategoryToBudgetPlan", "BudgetPlaning", null, new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "BudgetPlanCategoryListingDiv",
+    OnFailure = "GenericFailure"
+}, new { id = "AddCategoryToBudgetPlanForm" }))
+{
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-sm-1">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-3">
+                @Html.HiddenFor(x => x.BudgetPlanId)
+                @Html.DropDownListEx("CategoryId", Model.CategoryOptions, -1, new { @class = "form-control" }, true)
+            </div>
+
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label>
+                            <input type="radio" id="UsePercentFalseRadio" onclick="DisablePercentageTextBox()" name="UsePercent" value="false"  checked="checked" />  Dollar Amount
+                        </label>
+                    </div>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(x => x.AllocatedAmount, "", new { @class = "form-control", id = "DollarAmountTextBox"})
+                    </div>
+                </div>   
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label>
+                            <input type="radio" id="UsePercentTrueRadio" onclick="DisableDollarAmountTextBox()" name="UsePercent" value="true" />  Percentage
+                        </label>
+                    </div>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(x => x.AllocatedPercentage, "", new { @class = "form-control", id = "PercentageTextBox", disabled = "true" })
+                    </div>
+                </div>  
+            </div>
+
+            @*<div class="col-sm-3">
+                <label>
+                    <input type="radio" id="UsePercentTrueRadio" onclick="DisableDollarAmountTextBox()" name="UsePercent" value="true" checked="checked" />  Percentage
+                </label>
+                <label>
+                    <input type="radio" id="UsePercentFalseRadio" onclick="DisablePercentageTextBox()" name="UsePercent" value="false" />  Dollar Amount
+                </label>
+            </div>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(x => x.AllocatedPercentage, "", new { @class = "form-control", id= "PercentageTextBox" })
+                @Html.TextBoxFor(x => x.AllocatedAmount, "", new { @class = "form-control", id = "DollarAmountTextBox", disabled = "true" })
+            </div>*@
+
+            <div class="col-sm-1">
+                <input type="submit" value="Add" @*onclick="document.getElementById('AddCategoryToBudgetPlanForm').submit();"*@ class="btn" />
+            </div>
+
+        </div>
+    </div>
+}

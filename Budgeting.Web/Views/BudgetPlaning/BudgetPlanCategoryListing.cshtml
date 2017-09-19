@@ -1,0 +1,122 @@
+﻿@using Budgeting.Dto
+@model BudgetPlanDto
+
+@*<p class="page-title">Monthly Budget Details</p>*@
+
+@if (ViewData.ModelState.IsValid != true)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var value in ViewData.ModelState.Values)
+            {
+                foreach (var error in value.Errors)
+                {
+                    <li>
+                        @error.ErrorMessage
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+}
+
+<table class="table">
+    @*<thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.FirstOrDefault().Name)</th>
+            <th>@Html.DisplayNameFor(x => x.FirstOrDefault().CategoryBudget)</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>*@
+    <tbody>
+        @if (Model.Categories.Count == 0)
+        {
+            {Html.RenderPartial("_NoItemsFound"); }
+        }
+        @foreach (BudgetPlanCategoryDto dto in Model.Categories)
+        {
+            <tr>
+                <td></td>
+                <td>
+                    @Html.TextBoxFor(x => dto.CategoryName, new { @class = "form-control", disabled="true", id="CategoryName_" + @dto.BudgetPlanCategoryId })
+                    @*@Html.DropDownListEx("CategoryId", Model.CategoryOptions, dto.CategoryId, new { @class = "form-control BPC-disabled-" + @dto.BudgetPlanCategoryId, disabled = "true" }, true)*@
+                </td>
+                @if (dto.UsePercent)
+                {
+                    <td>
+                        <div class="form-horizontal">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control budget-plan-label-editable BPC-disabled-@dto.BudgetPlanCategoryId" id="AllocatedPercentage_@dto.BudgetPlanCategoryId"
+                                       disabled="disabled" value="@dto.AllocatedPercentage  %" />
+
+                                @*(@Html.TextBoxFor(x => dto.AllocatedPercentage, new { @class = "form-control BPC-disabled", disabled = "true", id = "AllocatedPercentage_" + @dto.BudgetPlanCategoryId }) %)*@
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label budget-plan-label">($ @dto.AllocatedAmount)</label> 
+                            </div>
+                        </div>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <div class="form-horizontal">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control budget-plan-label-editable BPC-disabled-@dto.BudgetPlanCategoryId" name="dto.CategoryBudgetDollar"
+                                       id="AllocatedAmount_@dto.BudgetPlanCategoryId" disabled="disabled" value="$ @dto.AllocatedAmount">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label budget-plan-label">(@dto.AllocatedPercentage %)</label>
+                            </div>
+                        </div>
+                    </td>
+                }
+                <td>
+                    <input type="button" value="Save" class="btn hidden" 
+                           onclick="SaveAmount(@dto.BudgetPlanCategoryId)" 
+                           id="BPCListingSaveAmountBtn_@dto.BudgetPlanCategoryId"/>
+
+                    <input type="button" value="Save" class="btn hidden"
+                           onclick="SavePercent(@dto.BudgetPlanCategoryId)"
+                           id="BPCListingSavePercentageBtn_@dto.BudgetPlanCategoryId" />
+                    <button class="btn" id="BudgetPlanCategoryListingEditBtn_@dto.BudgetPlanCategoryId" 
+                            onclick="EditBudgetPlanCategory(@dto.BudgetPlanCategoryId, '@dto.UsePercent.ToString()')">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn alert-danger" onclick="ReplaceBudgetPlanCategoryListing('@Url.Action("Delete")?budgetPlanCategoryId=@dto.BudgetPlanCategoryId')">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@* Add or update categories *@
+@{ Html.RenderAction("AddCategoryToBudgetPlan_Blank", new { budgetPlanId = Model.BudgetPlanId }); }
+
+<br />
+<div>
+    @Html.ActionLink("Add, Edit, or Delete your Category Options", "Index", "Categories")
+</div>
+@if (ViewBag.ErrMessage != null)
+{
+    <div>
+        @ViewBag.ErrMessage
+    </div>
+}
+
+<script type="text/javascript">
+    function SaveAmount(id) {
+        var newAmount = $('#AllocatedAmount_' + id).val();
+        ReplaceBudgetPlanCategoryListing('@Url.Action("SaveAmount")?budgetPlanCategoryId=' + id + '&allocatedAmount=' + newAmount);
+    }
+    function SavePercent(id) {
+        var newPercent = $('#AllocatedPercentage_' + id).val();
+        ReplaceBudgetPlanCategoryListing('@Url.Action("SavePercent")?budgetPlanCategoryId=' + id + '&allocatedPercent=' + newPercent);
+    }
+</script>

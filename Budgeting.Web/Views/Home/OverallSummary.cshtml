@@ -1,0 +1,37 @@
+﻿@using Budgeting.Dto;
+@model UserDto
+
+<h5>Overview</h5>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Month salary</p>
+    <p class="col-sm-7">$ @Model.BaseSalary</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Pre-tax spending</p>
+    <p class="col-sm-7">$ @Model.TotalPretaxSpending</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Estimated taxes</p>
+    <p class="col-sm-7">$ @Model.ExpectedTaxAmount  (@Model.ExpectedTaxPercentage %)</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Salary after tax</p>
+    <p class="col-sm-7">$ @Model.SalaryAfterTax</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Total spending budget for this month</p>
+    <p class="col-sm-7">$ @Model.CurrentMonthBudgetedAmount</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Total other revenue for this month</p>
+    <p class="col-sm-7">$ @Model.OtherRevenue</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Total spending (pre-tax and post-tax) this month (so far)</p>
+    <p class="col-sm-7">$ @Model.CurrentMonthSpendingTotal (@Model.CurrentMonthSpendingPercentage % of budget)</p>
+</div>
+<div class="row form-horizontal">
+    <p class="col-sm-5 overview-label">Budget remaining for this month</p>
+    <p class="col-sm-7">$ @Model.CurrentMonthRemainingAmount</p>
+</div>
+@*<p>Total spent this year to date: $ @Model.YearSpendingTotal</p>*@

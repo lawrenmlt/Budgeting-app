@@ -1,0 +1,4 @@
+﻿@using Budgeting.Dto
+@model List<LookupDto>
+
+@Html.DropDownListEx("CategoryId", Model, -1, new { @class = "form-control", id = "_CategoryDropDownId" })
